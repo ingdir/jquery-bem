@@ -6,7 +6,14 @@
 (function($, undefined) {
 ///////////////////////////////////////////////////////////////////////////////
 
-var blockPrefixes = '(?:b\\-|l\\-)',
+// BEM namespace can be used by another plugin, so use $.extend
+$.BEM = $.extend($.BEM || {}, {setup: function(cfg) {
+
+cfg = $.extend({
+    blockPrefixes: ['b-', 'l-']
+}, cfg || {});
+
+var blockPrefixes = '(?:' + cfg.blockPrefixes.join('|') + ')',
     elemSeparator = '__',
     modSeparator = '_',
     whitespace = '[\\x20\\t\\r\\n\\f]',
@@ -254,8 +261,8 @@ Element[prototype] = {
     }
 };
 
-
-$.BEM = {
+// $.BEM is already defined, so we have to extend it
+$.extend($.BEM, {
     decl: function(name, mod, val) {
         return new Block(name, mod, val);
     },
@@ -276,7 +283,7 @@ $.BEM = {
             getCallbacks(buildKey, buildKey, name, mods || [])
         ).apply(this, args);
     }
-};
+});
 
 
 $fn.bemCall = function(name) {
@@ -389,5 +396,10 @@ $fn.bemMod = function(mod, val) {
     }
 };
 
+}});  // end of init()
+
+// initialize with default parameters
+$.BEM.setup();
+
 ///////////////////////////////////////////////////////////////////////////////
-})($);
+})(jQuery);

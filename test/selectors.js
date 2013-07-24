@@ -10,6 +10,18 @@ function equalNodes(selector, ids) {
 }
 
 test('Block selectors test', function() {
+
+    /**
+    $.BEM.setup({
+        blockPrefixes: ['dm-']
+    });
+
+
+    $.BEM.setup({
+        blockPrefixes: ['b-', 'l-']
+    });
+    /**/
+
     equalNodes('%b-block1', ['1', '2', '3', '6']);
     equalNodes('%b-block2', ['4', '7']);
     equalNodes('%b-block5', ['8-1']);
